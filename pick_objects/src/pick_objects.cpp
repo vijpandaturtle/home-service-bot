@@ -20,11 +20,12 @@ int main(int argc, char** argv){
   move_base_msgs::MoveBaseGoal goal;
 
   // set up the frame parameters
-  goal.target_pose.header.frame_id = "base_link";
+  goal.target_pose.header.frame_id = "map";
   goal.target_pose.header.stamp = ros::Time::now();
 
   // Define a position and orientation for the robot to reach
   goal.target_pose.pose.position.x = 1.0;
+  goal.target_pose.pose.position.y = 2.0;
   goal.target_pose.pose.orientation.w = 1.0;
 
    // Send the goal position and orientation for the robot to reach
@@ -36,9 +37,32 @@ int main(int argc, char** argv){
 
   // Check if the robot reached its goal
   if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
-    ROS_INFO("Hooray, the base moved 1 meter forward");
+    ROS_INFO("Hooray, the base reached pickup zone");
   else
-    ROS_INFO("The base failed to move forward 1 meter for some reason");
+    ROS_INFO("The base failed to reach pickup for some reason");
+
+  ros::Duration duration(5.0);
+  duration.sleep();
+
+  //Defining dropoff location goal
+  goal.target_pose.header.stamp = ros::Time::now();
+  goal.target_pose.pose.position.x = -2.0;
+  goal.target_pose.pose.position.y = 3.0;
+  goal.target_pose.pose.orientation.w = 2.0;
+
+  //Position and orientation of second goal to reach
+  ROF_INFO("Moving to Second goal/dropoff zone");
+  ac.sendGoal(goal);
+
+  // Wait an infinite time for the results
+  ac.waitForResult();
+
+  // Check if the robot reached its goal
+  if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
+    ROS_INFO("Hooray, the base reached dropoff");
+  else
+    ROS_INFO("The base failed to reach dropoff");
+
 
   return 0;
 }
