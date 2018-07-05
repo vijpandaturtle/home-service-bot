@@ -51,7 +51,7 @@ int main(int argc, char** argv){
   goal.target_pose.pose.orientation.w = 2.0;
 
   //Position and orientation of second goal to reach
-  ROF_INFO("Moving to Second goal/dropoff zone");
+  ROS_INFO("Moving to Second goal/dropoff zone");
   ac.sendGoal(goal);
 
   // Wait an infinite time for the results

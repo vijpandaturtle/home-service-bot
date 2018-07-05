@@ -20,7 +20,7 @@ int main( int argc, char** argv )
     marker.ns = "basic_shapes";
     marker.id = 0;
 
-    // Set the marker type/shape to a cube 
+    // Set the marker type/shape to a cube
     marker.type = visualization_msgs::Marker::CUBE;
 
     // Set the marker action.  Options are ADD, DELETE, and new in ROS Indigo: 3 (DELETEALL)
@@ -59,8 +59,6 @@ int main( int argc, char** argv )
       sleep(1);
     }
     marker_pub.publish(marker);
-
-    }
 
     r.sleep();
   }
